@@ -21,6 +21,8 @@ This enables a new era of portability for scraping. Instead of writing a one-off
 
 Many of the above-mentioned features are can only be fully realized with a strong community. 
 
+Take a look at our Contributing Guide.
+
 ## Additional Features
 
 These are not a part of the immediate roadmap for our reference implementations but could be added later.

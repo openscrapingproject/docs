@@ -5,13 +5,13 @@ module.exports = {
   url: "https://openscraping.alexkreidler.com",
   baseUrl: "/",
   favicon: "img/favicon.ico",
-  organizationName: "facebook", // Usually your GitHub org/user name.
-  projectName: "docusaurus", // Usually your repo name.
+  organizationName: "openscrapingproject", // Usually your GitHub org/user name.
+  projectName: "docs", // Usually your repo name.
   themeConfig: {
     navbar: {
       title: "OpenScraping",
       logo: {
-        alt: "My Site Logo",
+        alt: "TODO: My Site Logo",
         src: "img/logo.svg",
       },
       links: [
@@ -23,7 +23,7 @@ module.exports = {
         },
         { to: "blog", label: "Blog", position: "left" },
         {
-          href: "https://github.com/openscrapingproject/docs",
+          href: "https://github.com/openscrapingproject",
           label: "GitHub",
           position: "right",
         },
@@ -50,16 +50,16 @@ module.exports = {
           items: [
             {
               label: "Stack Overflow",
-              href: "https://stackoverflow.com/questions/tagged/docusaurus",
+              href: "https://stackoverflow.com/questions/tagged/openscraping",
             },
-            {
-              label: "Discord",
-              href: "https://discordapp.com/invite/docusaurus",
-            },
-            {
-              label: "Twitter",
-              href: "https://twitter.com/docusaurus",
-            },
+            // {
+            //   label: "Discord",
+            //   href: "https://discordapp.com/invite/docusaurus",
+            // },
+            // {
+            //   label: "Twitter",
+            //   href: "https://twitter.com/docusaurus",
+            // },
           ],
         },
         {
@@ -71,7 +71,7 @@ module.exports = {
             },
             {
               label: "GitHub",
-              href: "https://github.com/facebook/docusaurus",
+              href: "https://github.com/openscrapingproject",
             },
           ],
         },
