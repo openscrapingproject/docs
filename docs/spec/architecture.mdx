@@ -1,0 +1,25 @@
+---
+title: Architecture
+---
+
+## Diagram
+
+This diagram shows a visual representation of the rough execution flow of any given OSP agent.
+
+A question mark (`?`) after a component means that component is optional.
+
+import Mermaid from '../../src/theme/Mermaid';
+
+<div style={{textAlign:"center"}}>
+<Mermaid chart={`
+graph TD
+A[Start] -->|Fetch and distribute job| B[Job Service]
+B --> C[Requestor]
+C --> D[Matcher]
+D --> E[Parser?]
+E --> F[Extractor]
+F --> G[Generator?]
+G -->|Store relevant data| H[Data Service]
+H --> K[Done]
+`}/>
+</div>
