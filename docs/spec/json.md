@@ -9,41 +9,46 @@ Thus, it could easily be serialized into any key-value or document-based storage
 However, for the purposes of the specification, all examples will be given in JSON. Any implementation MAY implement more than one serialization format but it MUST support JSON.
 
 ```json
-// In this version the matcher specification is embedded with the components
 {
-  "initial_urls": ["/product/:ID1", "/product/:ID2"],
+  "name": "collection_name",
+  "initial_urls": [
+    "/product/:ID1",
+    "/product/:ID2",
+    "each URL generates a new Job",
+    "with an ID of collection_name_0 ... collection_name_N"
+  ],
   "requestor": {
     "plugin": "builtin",
     "config": {
-      "browser": ["Firefox", "random"], //sets User-Agent
+      "browser": ["Firefox", "random"],
       "template": "default"
-      // or no template then sets the default settings
     }
   },
   "pages": {
-    "productPage": {
+    "<page_set_ID>": {
       "matcher": {
-        "url": "/product/*/"
+        "plugin": "regex",
+        "config": {
+          "url": "/product/*/",
+          "headers": {
+            "Content-Type": "text/html"
+          }
+        }
       },
-      "data": {
-        "key": {
-          "plugin": "extractorID",
-          "config": "eConf"
+      "extractor": {
+        "plugin": "extractorID",
+        "config": {
+          "extra": "config"
+        },
+        "definition": {
+          "scraping": "definition",
+          "can include": "hardcoded values",
+          "or use of": "XPATH, css or similar"
         }
       }
     }
   },
-  "parsers": {
-    //this could be unecessary
-    "html": {
-      "plugin": "builtin/html",
-      "headers": {
-        "Content-Type": "text/html"
-      }
-    }
-  },
   "data": {
-    //could be default
     "plugin": "output",
     "config": {
       "serialize": "json",
@@ -51,48 +56,57 @@ However, for the purposes of the specification, all examples will be given in JS
     }
   }
 }
-
 ```
-MWISL - means what it sounds like
-## Initial portions
 
-`jobID` MWISL
+## Metadata
 
-`initial_urls` creates an initial set of jobs with random IDs for testing
+`name` The name of the Job Collection. Used to generate each individual Job as `collection_name_<0...N>`
 
-## various components
+`initial_urls` A list of URLs for each initial Job to create in the Collection.
 
-### `requestor`
-`name` - specifies the requestor service to use from the registry. this allows for custom code to slot in
-`config` - any serializeable config to be sent to the service
+A collection is a non-standard container object for jobs, used by Osprey for testing. Usually, one would only create a single Job by passing JSON to the Job API.
 
-`browser` - provides guidance to the random user-agent generator
-`headers` allow generic configuration of req headers
+## Components
 
-### parsers
-Allows for custom registration of a parser matcher. Follows the generic matcher format
+In general, each component follows the same pattern.
 
-`matcher`
-allows matching the following values based on strings or regexes
-`headers` -response headers
-`url`
-<!-- `body` -->
+- `plugin` - The ID of the specific Plugin to use that implements the component. It will be loaded from the registry. TODO: figure out registration of custom plugins.
+- `config` - An object of the configuration to be sent to the Plugin. It will be merged with default config, if provided by the plugin. Additionally, the `config` object may contain the `template` key which specifies a template of configuration of which to merge into. TODO: Templates can also be composed
 
-### data
-`plugin` specifies the service to use
-`config` 
+### `builtin` Requestor Plugin
 
-`serialize` the format to serialize to
-`out` stdout, stderr or a file location
+- `browser` - provides guidance to the random user-agent generator?
+- `headers` allow generic configuration of reqiest headers
 
-## Extraction
+### `output` Data Plugin
 
-`pages`
+- `serialize` A string: the format to serialize to
+- `out` stdout, stderr or a file location
 
-`pageName`
-`matcher` - the standard matching format
+## Matching and Extraction
 
-`data` the format of the extracted data
-`layerKey` layer name
-`plugin`
-`config`
+This portion of the process is more complicated. Firstly, the spec allows multiple Page Sets, which are collections of related pages, usually with a similar or identical markup structure.
+
+Each page set is defined by one Matcher. If the Matcher returns a match, then the Extractor and any other components are run in their respective order.
+
+<!-- TODO: think about adding multiple matchers: would it be in sequence, would allow AND or OR operators, could use Bloom filter? -->
+
+- `pages` - a map from the Page Set ID to the components that run on that Page Set
+
+### `regex` Matcher Plugin
+
+- `url` A regex string to match against the URL
+- `headers` A map from an absolute string to a regex string to match against that header
+
+### Multiple extraction
+
+:::caution
+Warning! The following is not being implemented right now b/c it is **Overcomplicated**
+:::
+
+Within a page set, the same data is always extracted from those pages. However, since sometimes pages contain data in different formats, we allow for the use of multiple extractors.
+
+What's the use case: E.g. grab some info from HTML structure, and a few fields from an embedded JSON-LDappliction/ld+json script tag.
+However, here, we'd probably need the HTML extractor to extract the location and content of the script tag first and then pass it to the next extractor. Theoretically, extractors can access any subset of input data, thus, we could extend this into a DAG of processing. Thus, overcomplicated.
+
+This would be implemented as a simple additional map from `<data_layer_id>` to `plugin` and `config` within the `extractor`(s) key.

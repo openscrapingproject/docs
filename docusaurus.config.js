@@ -1,3 +1,7 @@
+
+const remarkMath = require("remark-math");
+const rehypeKatex = require("rehype-katex");
+
 module.exports = {
   title: "OpenScraping Project",
   tagline:
@@ -90,6 +94,9 @@ module.exports = {
           // Please change this to your repo.
           editUrl:
             "https://github.com/openscrapingproject/docs/edit/master/docs/",
+
+          remarkPlugins: [remarkMath],
+          rehypePlugins: [[rehypeKatex, {}]],
         },
         blog: {
           showReadingTime: true,

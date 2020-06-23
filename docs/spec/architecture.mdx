@@ -2,24 +2,53 @@
 title: Architecture
 ---
 
-## Diagram
+A question mark (`?`) after a word, phrase, or diagram component means that item is optional.
 
-This diagram shows a visual representation of the rough execution flow of any given OSP agent.
+## OpenScraping Context
 
-A question mark (`?`) after a component means that component is optional.
+The below diagram illustrates a common example of how OpenScraping is used in a broader context/on a macro scale.
+
 
 import Mermaid from '../../src/theme/Mermaid';
 
 <div style={{textAlign:"center"}}>
 <Mermaid chart={`
-graph TD
-A[Start] -->|Fetch and distribute job| B[Job Service]
-B --> C[Requestor]
-C --> D[Matcher]
+graph TB
+subgraph A [Client]
+end
+A -->|Create Job| B[OpenScraping Job API]
+subgraph Scraper
+B -->|Distributes Job to an Agent| C[Agent]
+C -->|Run, and store in?| D[(Data Store)]
+end
+A -->|Retrieve Data| D
+A -->|Check status| B
+B -->|Notify Job completed, with data?| A
+`}/>
+</div>
+
+## Agent Execution
+
+This diagram shows a visual representation of the rough execution flow of any given OSP agent.
+
+<div style={{textAlign:"center"}}>
+<Mermaid chart={`
+graph TB
+B[Job Service] -->|Fetch job for agent| C[Requestor]
+subgraph Agent
+C --> D[Matcher 1]
+C --> K[Matcher 2]
+K --> J[No Match, end]
+C --> L[... Matcher N]
+L --> J[No Match, end]
+subgraph Matcher Processing
 D --> E[Parser?]
 E --> F[Extractor]
 F --> G[Generator?]
+end
+end
 G -->|Store relevant data| H[Data Service]
-H --> K[Done]
 `}/>
 </div>
+
+The Requestor accesses the network. TODO: Matchers are run in parallel to improve performance. Each Matcher Processing operation is run sequentially and synchronously on that Matcher's thread.

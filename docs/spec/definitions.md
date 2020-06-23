@@ -21,14 +21,24 @@ NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and
 
 An agent is one logical scraping node. A common setup for a distributed scraping system distributes a given scraping task across many agents running in a cluster.
 
-Usually, agents will simply pull their next Job from a queuing system. However, later, the specification may introduce Browsing Modes, which are designed to imitate human interaction with the web to fool automated traffic prevention systems.
+<!-- Usually, agents will simply pull their next Job from a queuing system. However, later, the specification may introduce Browsing Modes, which are designed to imitate human interaction with the web to fool automated traffic prevention systems. -->
+
+An Agent MUST be governed by a state machine defined by [State](#state) and MUST request a Job from the Job Service.
+
+An Agent MUST execute all plugins specified in the provided Configuration, and pass through any custom configuration.
 
 ### Configuration
 
-Configuration is the sum total of all information needed to configure each component for a job. It only applies to that job.
-It includes some default configuration about how the components interact within the agent, along with custom configuration for each component. For 3rd-party components, they should provide their own descriptions of their configuration.
+Configuration is a serialized representation of the information needed to configure each component for a job. It MUST only apply to that job.
 
-It also includes the Scraping Definition, namely the configuration passed to an extractor.
+Each component MAY provide default configuation, which then will be overwritten by the User.
+
+3rd-party components, SHOULD provide their own documentation of their configuration. They SHOULD also provide a machine-readable documentation format such as JSON Schema or JSON-LD
+
+Configuration MUST also include the Scraping Definition.
+
+### Scraping Definition
+The configuration passed to an Extractor component.
 
 ### Job
 
@@ -44,7 +54,7 @@ The system MUST provide an interface for fetching new jobs. A simple way to star
 
 ### State
 
-A state is the driving force of an agent. It consists of a Starting state, but then tracks the processing of requests and parsing. State contains all requests and responses, along with extracted relevant data.
+A State represents the state of an agent. It consists of a Starting state, but then tracks the processing of requests and parsing. State contains all requests and responses, along with extracted relevant data.
 
 The following are external resources, and are usually managed outside the scope of the OpenScraping framework:
 
@@ -56,7 +66,7 @@ Example: MongoDB, FoundationDB
 
 ### Job Store
 
-A system that stores a queue of OSP jobs.
+A system that stores a queue of Jobs.
 
 Example: Kafka, Redis
 
@@ -70,7 +80,7 @@ A component in OpenScraping are the key logical objects that make up the system.
 
 Components MUST be placeholders that Plugins may fill.
 
-An implementation of OSP Spec MAY provide its' own built-in Plugins.
+An implementation of the specification MAY provide its' own built-in Plugins.
 
 The inputs and outputs of each component are well-defined in this specification.
 

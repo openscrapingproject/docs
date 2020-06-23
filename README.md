@@ -1,6 +1,11 @@
-# Website
+# OpenScraping Website
 
 This website is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator.
+
+### Prereqs
+
+Nodejs v12. I use `v12.18.1`
+v13 gives an error with `kleurs` package
 
 ### Installation
 

@@ -1,0 +1,70 @@
+---
+title: Output Data Format
+---
+
+The output data is characterized by zero or more matched page sets, one or more matched pages, and N keys that are defined in the Scraping definition.
+
+## JSON Output
+
+The following is a minimalist output format, but loses certain information.
+
+```json
+{
+  "<pageSetID>": {
+    "<url>": {
+      "data": "result",
+      "is": "structured"
+    }
+  }
+}
+```
+
+First off, we highly recommend enriching the data with semantic information. All implementations SHOULD parse individual page scraping definitions, and output data, AND provide warnings if the data is not a properly structured JSON-LD document.
+
+Additionally, production environments SHOULD throw an error if the result is not properly structured.
+
+This allows for each page to be consumed by a system that can easily understand its context and place it directly into a knowledge graph.
+
+## Example
+
+Let's say our scraper retrieved this data:
+
+```json
+{
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "description": "A never-released report shows that the number of people killed by police activity in New York is more than twice what has been reported.",
+  "headline": "Undercounting Those Killed by the N.Y.P.D.",
+  "publisher": {
+    "@id": "https://www.nytimes.com/#publisher"
+  }
+}
+```
+
+## Data Size and Visualization
+
+import Mermaid from "../../src/theme/Mermaid";
+
+<div style={{ textAlign: "center" }}>
+  <Mermaid
+    chart={`
+graph TB
+A[Root] --> B[Page Set 1]
+B --> E & F & G & H
+A --> C[Page Set 2]
+C --> I & J & K & L & M
+E --> N[attr 1] & O[attr 2] & P[... attr N]
+A --> Z[... Page set PS]
+`}
+  />
+</div>
+
+This results in a total data size of:
+
+$$
+S = \sum_{n=1}^{PS} N_{i} \cdot P_{i}
+$$
+
+Where $PS$ is the number of Page Sets, $N_{i}$ is the number of Relevant Data attributes for set i, and $P_{i}$ is the number of pages for that set.
+
+Generally, for a static Scraping Definition, only $P_{i}$ is subject to change based on new pages which may be posted and match a page set, or different slices of an offline dataset which the scraper looks at.

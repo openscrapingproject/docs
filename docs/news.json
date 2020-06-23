@@ -1,0 +1,53 @@
+{
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "description": "A never-released report shows that the number of people killed by police activity in New York is more than twice what has been reported.",
+    "image": [
+        {
+            "@context": "http://schema.org",
+            "@type": "ImageObject",
+            "url": "https://static01.nyt.com/images/2020/06/19/opinion/19gay1/merlin_90709285_7d7816e7-d794-4220-9090-583616ecdb75-superJumbo.jpg",
+            "height": 1380,
+            "width": 2048,
+            "caption": "Mayor Bill de Blasio addressing New York City Police Academy graduates in 2014."
+        },
+    ],
+    "mainEntityOfPage": "https://www.nytimes.com/2020/06/19/opinion/police-involved-deaths-new-york-city.html",
+    "url": "https://www.nytimes.com/2020/06/19/opinion/police-involved-deaths-new-york-city.html",
+    "inLanguage": "en-US",
+    "author": [
+        {
+            "@context": "http://schema.org",
+            "@type": "Person",
+            "url": "https://www.nytimes.com/by/mara-gay",
+            "name": "Mara Gay"
+        }
+    ],
+    "dateModified": "2020-06-19T19:21:05.000Z",
+    "datePublished": "2020-06-19T19:21:05.000Z",
+    "headline": "Undercounting Those Killed by the N.Y.P.D.",
+    "publisher": {
+        "@id": "https://www.nytimes.com/#publisher"
+    },
+    "copyrightHolder": {
+        "@id": "https://www.nytimes.com/#publisher"
+    },
+    "sourceOrganization": {
+        "@id": "https://www.nytimes.com/#publisher"
+    },
+    "copyrightYear": 2020,
+    "isAccessibleForFree": false,
+    "hasPart": {
+        "@type": "WebPageElement",
+        "isAccessibleForFree": false,
+        "cssSelector": ".meteredContent"
+    },
+    "isPartOf": {
+        "@type": [
+            "CreativeWork",
+            "Product"
+        ],
+        "name": "The New York Times",
+        "productID": "nytimes.com:basic"
+    }
+}

@@ -9,9 +9,9 @@ module.exports = {
         "spec/definitions",
         "spec/architecture",
         "spec/example",
-        "spec/extensibility",
         "spec/json",
-        "spec/component-mapping"
+        "spec/component-mapping",
+        "spec/output"
       ],
     },
   ],

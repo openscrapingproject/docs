@@ -22,44 +22,4 @@ Thus, the above could all be contained in one simple command-line tool.
 
 What does the user actually set?
 
-## Serialized JSON
-
 You can read the JSON Serialization Specification [here.](/spec/json.md)
-
-```json
-{
-  "initial_urls": ["/product/:ID1", "/product/:ID2"],
-  "requestor": {
-    "browser": ["Firefox", "random"], //sets User-Agent
-    "template": "default"
-    // or no template then sets the default settings
-  },
-  "matchers": {
-    "productPage": {
-      "url": {
-        "regex": "/product/*/"
-      }
-    },
-    "html": {
-      //this could be unecessary
-      "Content-Type": "text/html"
-    }
-  },
-  "extractors": {
-    "productPage": {
-      "XPATH config, etc": "babla"
-    }
-  },
-  "parsers": {
-    //this could be unecessary
-    "html": "builtin/html"
-  },
-  "data": { //could be default
-    "plugin": "output",
-    "config": {
-      "serialize": "json",
-      "out": "stdout"
-    }
-  }
-}
-```
