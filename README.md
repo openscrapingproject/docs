@@ -14,6 +14,10 @@ $ yarn
 ```
 
 ### Local Development
+```
+nvm use 12
+yarn start --host 0.0.0.0
+```
 
 ```
 $ yarn start

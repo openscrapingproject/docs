@@ -8,11 +8,18 @@ module.exports = {
       items: [
         "spec/definitions",
         "spec/architecture",
+        "spec/scraping-definition",
         "spec/example",
         "spec/json",
         "spec/component-mapping",
-        "spec/output"
+        "spec/output",
       ],
+    },
+    {
+      type: "category",
+      label: "Osprey",
+      collapsed: false,
+      items: ["osprey/intro", "osprey/xpath"],
     },
   ],
 };
