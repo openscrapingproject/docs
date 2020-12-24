@@ -89,8 +89,7 @@ module.exports = {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
-          editUrl:
-            "https://github.com/openscrapingproject/docs/edit/master/docs/",
+          editUrl: "https://github.com/openscrapingproject/docs/edit/master/",
 
           remarkPlugins: [remarkMath],
           rehypePlugins: [[rehypeKatex, {}]],
@@ -98,8 +97,7 @@ module.exports = {
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
-          editUrl:
-            "https://github.com/openscrapingproject/docs/edit/master/blog/",
+          editUrl: "https://github.com/openscrapingproject/docs/edit/master/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
