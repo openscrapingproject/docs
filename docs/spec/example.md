@@ -2,7 +2,7 @@
 title: Example Use-Case
 ---
 
-A simple example of a common implmentation/use-case of the [logical definitions](./index.md) is as follows:
+A simple example of a common implmentation/use-case of the [logical definitions](./definitions.md) is as follows:
 
 - Requestor
   - takes in an array of URLs, generates a basic GET request from them
